@@ -57,9 +57,21 @@ for i in df.iloc[:,:-1]:
 
     all_values.append(var)
 
-final_value = [all_values]
+# Convert to NumPy array and ensure correct shape & type
+final_value = np.array(all_values).reshape(1, -1).astype(np.float32)
 
-ans = model.predict(final_value)[0]
+# Make prediction
+ans = model.predict(final_value)
+
+# For Keras models, ans may be an array of probabilities, so convert to class
+if hasattr(model, "predict_classes"):  # for old Keras versions
+    ans = ans[0]
+else:  # for modern Keras / scikit-learn
+    if ans.ndim > 1:  # Keras output
+        ans = (ans > 0.5).astype(int)[0][0]
+    else:  # sklearn output
+        ans = ans[0]
+
 
 import time
 random.seed(132)
