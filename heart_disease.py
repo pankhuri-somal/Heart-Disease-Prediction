@@ -36,8 +36,6 @@ st.markdown(data)
 st.image('https://hinduja-prod-assets.s3.ap-south-1.amazonaws.com/s3fs-public/2024-03/Heart%20Failure%20and%20Symptoms.jpg')
 
 
-with open('heart_disease_pred.pkl', 'rb') as f:
-    model = pickle.load(f)
 
 
 # Load data
